@@ -12,7 +12,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
     @Transactional
-    public void buyProductUnSafe(Long productId, int quantity) {
+    public void buyProductUnSafe(int productId, int quantity) {
 
 
         Product product = productRepository.findById(productId).orElseThrow();
@@ -26,10 +26,10 @@ public class ProductService {
         productRepository.save(product);
     }
     @Transactional
-    public void buyProduct(Long productId, int quantity) {
+    public void buyProduct(int productId, int quantity) {
 
 
-        Product product = productRepository.findIdLock(productId);
+        Product product = productRepository.findProductAndLock(productId);
 
         if (product.getQuantity() < quantity) {
             throw new RuntimeException("Out of stock");

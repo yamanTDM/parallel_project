@@ -22,7 +22,7 @@ public class ProductController {
     @PostMapping("/buy")
     public String buyProduct(
            @RequestBody BuyProductRequest buyProductRequest
-    ) throws InterruptedException {
+    ){
         productService.buyProduct(buyProductRequest.getId(),buyProductRequest.getQuantity());
 
         return "Product Bought Successfully";
@@ -41,12 +41,12 @@ public class ProductController {
 
         for (int i = 0; i < 100; i++) {
             executor.submit(() -> {
-                productService.buyProduct(1L, 1);
+                productService.buyProduct(1, 1);
             });
         }
         for (int i = 0; i < 100; i++) {
             executor.submit(() -> {
-                productService.buyProductUnSafe(2L, 1);
+                productService.buyProductUnSafe(2, 1);
             });
         }
 
